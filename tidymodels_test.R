@@ -10,7 +10,7 @@ pacman::p_load("tidyverse",
 set.seed(1)
 
 
-## Separado conjunto de treino e de teste
+# Split test and train sets
 split_ <- sample(nrow(df), 0.9*nrow(df), replace = FALSE)
 train <- df[split_,]
 test <- df[-split_,]
@@ -45,9 +45,7 @@ predictions <- nn_fit %>%
 
 ## Metrics for the model
 
-## Neural network model
 postResample(pred = predictions, obs = test$discharge)
-
 
 pred <- tribble(~ precip, ~ eto, 2.65, 2.3)
 
@@ -59,27 +57,6 @@ predict(nn_fit, new_data = pred)
 discharge_test <- bind_cols(predictions, test %>% select(discharge, datetime))
 discharge_test
 
-
-plot(discharge_test)
-
-
-library(ggplot2)
-
-
-# Create a scatter plot with observed and predicted values
-ggplot(discharge_test, aes(x = datetime)) +
-  geom_point(aes(y = discharge, color = "Observed"), size = 3) +
-  geom_point(aes(y = .pred, color = "Predicted"), size = 3) +
-  labs(title = "Observed vs. Predicted Values",
-       x = "Date and Time",
-       y = "Value") +
-  scale_color_manual(values = c("Observed" = "blue", "Predicted" = "red")) +
-  theme_minimal()
-
-
-
-
-# Assuming you have the df dataframe with datetime, discharge, and .pred columns
 
 # Create a scatter plot with observed and predicted values and lines connecting them
 ggplot(discharge_test, aes(x = datetime)) +
