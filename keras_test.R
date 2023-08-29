@@ -1,9 +1,6 @@
 library(keras)
 library(caret)
 
-# Load your data
-# Assuming you have 'Train' and 'normalized_Valid' datasets
-
 # Define the model architecture
 model <- keras_model_sequential() %>%
   layer_dense(units = 10, activation = "relu", input_shape = ncol(x_train)) %>%  # Input layer
@@ -15,7 +12,7 @@ model %>% compile(
   optimizer = optimizer_adam()  # Use Adam optimizer
 )
 
-# Normalize input features (assuming they are not scaled yet)
+# Normalize input features 
 x_train <- Train[, c("precip", "eto")]
 x_train <- scale(x_train)
 
@@ -40,9 +37,6 @@ x_valid <- scale(x_valid)
 # Predict using the trained model
 predictions <- model %>% predict(x_valid)
 
-# Calculate accuracy or other relevant metrics if applicable
-# In a regression context, you might use metrics like Mean Squared Error (MSE) or Root Mean Squared Error (RMSE).
-
 # Extract true target values for validation
 y_valid <- normalized_train[, "discharge"]
 
@@ -55,12 +49,6 @@ rmse <- sqrt(mse)
 # Display results
 cat("Mean Squared Error (MSE):", mse, "\n")
 cat("Root Mean Squared Error (RMSE):", rmse, "\n")
-
-
-r_squared <- 1 - sum((Valid$discharge - predictions)^2) / sum((Valid$discharge - mean(Valid$discharge))^2)
-
-
-cat("Coefficient of Determination (R-squared):", r_squared, "\n")
 
 
 
