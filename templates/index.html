@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Model Deployment</title>
+</head>
+<body>
+    <h1>Predição de dados Hidrológicos</h1>
+    <form method="post">
+        <label for="input1">Precip:</label>
+        <input type="text" id="input1" name="input1"><br>
+        <label for="input2">Eto:</label>
+        <input type="text" id="input2" name="input2"><br>
+        <button type="submit">Predict</button>
+    </form>
+
+    {% if prediction %}
+    <p>Prediction: {{ prediction }}</p>
+    {% endif %}
+
+</body>
+</html>
